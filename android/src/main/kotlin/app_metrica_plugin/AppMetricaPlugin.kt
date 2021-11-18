@@ -455,13 +455,13 @@ class AppMetricaPlugin : MethodCallHandler, FlutterPlugin {
   }
 
   companion object {
-    private const val TAG = "AppmetricaSdkPlugin"
+    private const val TAG = "AppMetricaPlugin"
 
     /**
      * Plugin registration for v1 embedder.
      */
     fun registerWith(registrar: Registrar) {
-      val instance = AppmetricaSdkPlugin()
+      val instance = AppMetricaPlugin()
       instance.onAttachedToEngine(registrar.context(), registrar.messenger())
     }
   }
