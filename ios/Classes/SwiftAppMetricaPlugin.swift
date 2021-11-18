@@ -38,8 +38,8 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
         result(nil)
     case "showProductCardEvent":
         let args = call.arguments as! [String: Any]
-        let productActualPrice = args["actualPrice"] as! Int
-        let productOriginalPrice = args["productOriginalPrice"] as! Int
+        let productActualPrice = args["actualPrice"] as! Double
+        let productOriginalPrice = args["productOriginalPrice"] as! Double
         let screenWhereFromOpen = args["screenWhereFromOpen"] as! String
         let productName = args["productName"] as! String
         let productID = args["productID"] as! String
@@ -72,8 +72,8 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
         result(nil)
     case "showProductDetailsEvent":
         let args = call.arguments as! [String: Any]
-        let productActualPrice = args["actualPrice"] as! Int
-        let productOriginalPrice = args["productOriginalPrice"] as! Int
+        let productActualPrice = args["actualPrice"] as! Double
+        let productOriginalPrice = args["productOriginalPrice"] as! Double
         let productName = args["productName"] as! String
         let productID = args["productID"] as! String
         let referrer = YMMECommerceReferrer(type: nil, identifier: nil, screen: nil)
@@ -95,8 +95,8 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
         result(nil)
     case "addCartItemEvent":
         let args = call.arguments as! [String: Any]
-        let productActualPrice = args["actualPrice"] as! Int
-        let productOriginalPrice = args["productOriginalPrice"] as! Int
+        let productActualPrice = args["actualPrice"] as! Double
+        let productOriginalPrice = args["productOriginalPrice"] as! Double
         let productName = args["productName"] as! String
         let productID = args["productID"] as! String
         let referrer = YMMECommerceReferrer(type: nil, identifier: nil, screen: nil)
@@ -120,8 +120,8 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
         result(nil)
     case "removeCartItemEvent":
         let args = call.arguments as! [String: Any]
-        let productActualPrice = args["actualPrice"] as! Int
-        let productOriginalPrice = args["productOriginalPrice"] as! Int
+        let productActualPrice = args["actualPrice"] as! Double
+        let productOriginalPrice = args["productOriginalPrice"] as! Double
         let productName = args["productName"] as! String
         let productID = args["productID"] as! String
         let referrer = YMMECommerceReferrer(type: nil, identifier: nil, screen: nil)

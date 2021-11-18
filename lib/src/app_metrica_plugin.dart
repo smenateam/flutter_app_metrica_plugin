@@ -37,7 +37,7 @@ class AppmetricaSdk {
 
   ///Sends the begining of checkout event with [orderID] and List of lists of products as a set of [products]
   ///important that the internal lists should contain the attributes in the following form:
-  ///0 - [itemID], 1 - [itemName], 2 - [actualPrice], 3 - [originalPrice]
+  ///0 - [itemID], 1 - [itemName], 2 - [actualPrice], 3 - [originalPrice], points 2 and 3 ar always shoud be DOUBLE
   Future<void> reportBeginCheckoutEvent({
     required String orderID,
     required List products,
@@ -53,7 +53,7 @@ class AppmetricaSdk {
 
   ///Sends the purchase event with [orderID] and List of lists of products as a set of [products]
   ///important that the internal lists should contain the attributes in the following form:
-  ///0 - [itemID], 1 - [itemName], 2 - [actualPrice], 3 - [originalPrice]
+  ///0 - [itemID], 1 - [itemName], 2 - [actualPrice], 3 - [originalPrice], points 2 and 3 ar always shoud be DOUBLE
   Future<void> reportPurchaseEvent({
     required String orderID,
     required List products,
@@ -69,8 +69,8 @@ class AppmetricaSdk {
 
   ///Sends an event for adding an item from the shopping cart to the AppMetrica server.
   Future<void> reportAddCartItemEvent({
-    required int actualPrice,
-    required int productOriginalPrice,
+    required double actualPrice,
+    required double productOriginalPrice,
     required String productName,
     required String productID,
   }) async {
@@ -87,8 +87,8 @@ class AppmetricaSdk {
 
   ///Sends an event for deleting an item from the shopping cart to the AppMetrica server.
   Future<void> reportRemoveCartItemEvent({
-    required int actualPrice,
-    required int productOriginalPrice,
+    required double actualPrice,
+    required double productOriginalPrice,
     required String productName,
     required String productID,
   }) async {
@@ -105,8 +105,8 @@ class AppmetricaSdk {
 
   ///Sends an event recording the viewing of a specific product card to the AppMetrica server.
   Future<void> reportShowProductCardEvent({
-    required int actualPrice,
-    required int productOriginalPrice,
+    required double actualPrice,
+    required double productOriginalPrice,
     required String screenWhereFromOpen,
     required String productName,
     required String productID,
@@ -136,8 +136,8 @@ class AppmetricaSdk {
 
   ///Sends an event recording the viewing of a specific product detailed description to the AppMetrica server.
   Future<void> reportShowProductDetailsEvent({
-    required String actualPrice,
-    required String productOriginalPrice,
+    required double actualPrice,
+    required double productOriginalPrice,
     required String productName,
     required String productID,
   }) async {
