@@ -25,7 +25,7 @@ import com.yandex.metrica.profile.UserProfile
 /**
  * AppmetricaSdkPlugin
  */
-class AppmetricaSdkPlugin : MethodCallHandler, FlutterPlugin {
+class AppMetricaPlugin : MethodCallHandler, FlutterPlugin {
   private var methodChannel: MethodChannel? = null
   private var context: Context? = null
   private var application: Application? = null
