@@ -145,7 +145,7 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
         result(nil)
     case "beginCheckoutEvent":
         let args = call.arguments as! [String: Any]
-        let orderID = args["orderId"] as! String
+        let orderID = args["orderID"] as! String
         let products = args["products"] as! [[Any]]
         var cartedItems = [YMMECommerceCartItem]()
         
@@ -169,6 +169,7 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
         let order = YMMECommerceOrder(identifier: orderID, cartItems: cartedItems, payload: nil)
         
         YMMYandexMetrica.report(eCommerce: .beginCheckoutEvent(order: order), onFailure: nil)
+        
         result(nil)
     case "purchaseEvent":
         let args = call.arguments as! [String: Any]
