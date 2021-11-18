@@ -44,6 +44,7 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
         let productName = args["productName"] as! String
         let productID = args["productID"] as! String
         
+        
         let screen = YMMECommerceScreen(name: screenWhereFromOpen)
         
         let actualPrice = YMMECommercePrice(fiat: .init(unit: "RUB", value: .init(string: "\(productActualPrice)")))
