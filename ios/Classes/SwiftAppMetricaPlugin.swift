@@ -15,8 +15,21 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
     case "activate":
         let args = call.arguments as! [String: Any]
         let apiKey = args["apiKey"] as! String
+        let revenueAutoTrackingEnabled = args["revenueAutoTrackingEnabled"] as! Bool
+        let sessionTimeout = args["sessionTimeout"] as! UInt
+        let locationTracking = args["locationTracking"] as! Bool
+        let statisticsSending = args["statisticsSending"] as! Bool
+        let crashReporting = args["crashReporting"] as! Bool
+        let maxReportsInDatabaseCount = args["maxReportsInDatabaseCount"] as! UInt
+        
         let configuration = YMMYandexMetricaConfiguration.init(apiKey: apiKey)
-
+        configuration?.revenueAutoTrackingEnabled = revenueAutoTrackingEnabled
+        configuration?.sessionTimeout = sessionTimeout
+        configuration?.locationTracking = locationTracking
+        configuration?.statisticsSending = statisticsSending
+        configuration?.crashReporting = crashReporting
+        configuration?.maxReportsInDatabaseCount = maxReportsInDatabaseCount
+        
         YMMYandexMetrica.activate(with: configuration!)
 
         result(nil)

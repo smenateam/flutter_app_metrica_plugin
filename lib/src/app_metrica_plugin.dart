@@ -21,6 +21,7 @@ class AppmetricaSdk {
         bool locationTracking = true,
         bool statisticsSending = true,
         bool crashReporting = true,
+        bool revenueAutoTrackingEnabled = true,
         int maxReportsInDatabaseCount = 1000}) async {
     /// Set the API Key after activation.
     globalApiKey = apiKey;
@@ -32,6 +33,7 @@ class AppmetricaSdk {
       'statisticsSending': statisticsSending,
       'crashReporting': crashReporting,
       'maxReportsInDatabaseCount': maxReportsInDatabaseCount,
+      'revenueAutoTrackingEnabled': revenueAutoTrackingEnabled,
     });
   }
 

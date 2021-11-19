@@ -250,6 +250,7 @@ class AppMetricaPlugin : MethodCallHandler, FlutterPlugin {
       val locationTracking = arguments["locationTracking"] as Boolean
       val statisticsSending = arguments["statisticsSending"] as Boolean
       val crashReporting = arguments["crashReporting"] as Boolean
+      val revenueAutoTrackingEnabled = arguments["revenueAutoTrackingEnabled"] as Boolean
       val maxReportsInDatabaseCount = arguments["maxReportsInDatabaseCount"] as Int
       // Creating an extended library configuration.
       val config: YandexMetricaConfig = YandexMetricaConfig.newConfigBuilder(apiKey)
@@ -259,6 +260,7 @@ class AppMetricaPlugin : MethodCallHandler, FlutterPlugin {
               .withStatisticsSending(statisticsSending)
               .withCrashReporting(crashReporting)
               .withMaxReportsInDatabaseCount(maxReportsInDatabaseCount)
+              .withRevenueAutoTrackingEnabled(revenueAutoTrackingEnabled)
               .build()
       // Initializing the AppMetrica SDK.
       YandexMetrica.activate(context!!, config)
