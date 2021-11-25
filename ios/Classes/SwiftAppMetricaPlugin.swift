@@ -210,6 +210,9 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
         YMMYandexMetrica.report(eCommerce: .purchaseEvent(order: order), onFailure: nil)
 
         result(nil)
+    case "sendEventsBuffer":
+        YMMYandexMetrica.sendEventsBuffer()
+        result(nil)
     default:
         result(nil)
     }
