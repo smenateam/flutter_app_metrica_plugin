@@ -87,11 +87,10 @@ class AppMetricaPlugin : MethodCallHandler, FlutterPlugin {
   private fun reportRevenue(call: MethodCall, result: Result) {
     try {
       val arguments = call.arguments as Map<String, Any>
-      val productID = arguments["productID"] as String?
       val productQuantity = arguments["productQuantity"] as Int?
       val productPrice = arguments["productPrice"] as Long
 
-      YandexMetrica.reportRevenue(Revenue.newBuilderWithMicros(productPrice, Currency.getInstance("RUB")).withProductID(productID).withQuantity(productQuantity).build())
+      YandexMetrica.reportRevenue(Revenue.newBuilderWithMicros(productPrice, Currency.getInstance("RUB")).withQuantity(productQuantity).build())
     } catch (e: Exception) {
       Log.e(TAG, e.message, e)
       result.error("Error sending reportRevenue", e.message, null)
@@ -102,7 +101,7 @@ class AppMetricaPlugin : MethodCallHandler, FlutterPlugin {
   private fun handlePurchaseEvent(call: MethodCall, result: Result) {
     try {
       val arguments = call.arguments as Map<String, Any>
-      val orderID = arguments["orderID"] as String?
+      val orderID = arguments["orderID"] as String
       val products: List<List<Any>> = arguments["products"] as List<List<Any>>
       val cartedItems: ArrayList<ECommerceCartItem> = ArrayList()
 
@@ -114,11 +113,11 @@ class AppMetricaPlugin : MethodCallHandler, FlutterPlugin {
         val product: ECommerceProduct =
           ECommerceProduct(it[0] as String).setName(it[1] as String)
             .setOriginalPrice(originalPrice).setActualPrice(actualPrice)
-        val addedItems = ECommerceCartItem(product, actualPrice, 1.0)
+        val addedItems = ECommerceCartItem(product, actualPrice, it[4] as Double)
         cartedItems.add(addedItems)
 
       }
-      val order = ECommerceOrder(orderID!!, cartedItems)
+      val order = ECommerceOrder(orderID, cartedItems)
       val purchaseEvent = ECommerceEvent.purchaseEvent(order)
       YandexMetrica.reportECommerce(purchaseEvent)
     } catch (e: Exception) {
@@ -142,7 +141,7 @@ class AppMetricaPlugin : MethodCallHandler, FlutterPlugin {
         val product: ECommerceProduct =
           ECommerceProduct(it[0] as String).setName(it[1] as String)
             .setOriginalPrice(originalPrice).setActualPrice(actualPrice)
-        val addedItems = ECommerceCartItem(product, actualPrice, 1.0)
+        val addedItems = ECommerceCartItem(product, actualPrice, it[4] as Double)
         cartedItems.add(addedItems)
 
       }

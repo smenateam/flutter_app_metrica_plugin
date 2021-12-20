@@ -39,14 +39,12 @@ class AppmetricaSdk {
   }
 
   Future<void> reportRevenue({
-    required String productID,
     required int productQuantity,
     required var productPrice,
   }) async {
     await _channel.invokeMethod<void>(
       'reportRevenue',
       <String, dynamic>{
-        'productID': productID,
         'productQuantity': productQuantity,
         'productPrice': productPrice,
       },
@@ -55,7 +53,7 @@ class AppmetricaSdk {
 
   ///Sends the begining of checkout event with [orderID] and List of lists of products as a set of [products]
   ///important that the internal lists should contain the attributes in the following form:
-  ///0 - [itemID], 1 - [itemName], 2 - [actualPrice], 3 - [originalPrice], points 2 and 3 ar always shoud be DOUBLE
+  ///0 - [itemID], 1 - [itemName], 2 - [actualPrice], 3 - [originalPrice], 4 - [itemQuantity] points 2 and 3 ar always shoud be DOUBLE
   Future<void> reportBeginCheckoutEvent({
     required String orderID,
     required List products,
@@ -71,7 +69,7 @@ class AppmetricaSdk {
 
   ///Sends the purchase event with [orderID] and List of lists of products as a set of [products]
   ///important that the internal lists should contain the attributes in the following form:
-  ///0 - [itemID], 1 - [itemName], 2 - [actualPrice], 3 - [originalPrice], points 2 and 3 ar always shoud be DOUBLE
+  ///0 - [itemID], 1 - [itemName], 2 - [actualPrice], 3 - [originalPrice], 4 - [itemQuantity] points 2 and 3 ar always shoud be DOUBLE
   Future<void> reportPurchaseEvent({
     required String orderID,
     required List products,

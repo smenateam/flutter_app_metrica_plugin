@@ -39,7 +39,6 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
         let priceQuantity = args["productQuantity"] as! UInt
         
         let revenueInfo = YMMMutableRevenueInfo.init(priceDecimal: args["productPrice"] as! NSDecimalNumber, currency: "RUB")
-        revenueInfo.productID = args["productID"] as! String
         revenueInfo.quantity = priceQuantity
         
         YMMYandexMetrica.reportRevenue(revenueInfo, onFailure: nil)
@@ -169,7 +168,6 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
         result(nil)
     case "beginCheckoutEvent":
         let args = call.arguments as! [String: Any]
-        let orderID = args["orderID"] as! String
         let products = args["products"] as! [[Any]]
         var cartedItems = [YMMECommerceCartItem]()
         
@@ -186,18 +184,17 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
                 originalPrice: originalPrice,
                 promoCodes: nil)
             
-            let addedItems = YMMECommerceCartItem(product: product, quantity: .init(string: "1"), revenue: actualPrice, referrer: nil)
+            let addedItems = YMMECommerceCartItem(product: product, quantity: .init(string: (item[4] as! String)), revenue: actualPrice, referrer: nil)
             cartedItems.append(addedItems)
         }
         
-        let order = YMMECommerceOrder(identifier: orderID, cartItems: cartedItems, payload: nil)
+        let order = YMMECommerceOrder(identifier: "", cartItems: cartedItems, payload: nil)
         
         YMMYandexMetrica.report(eCommerce: .beginCheckoutEvent(order: order), onFailure: nil)
         
         result(nil)
     case "purchaseEvent":
         let args = call.arguments as! [String: Any]
-        let orderID = args["orderID"] as! String
         let products = args["products"] as! [[Any]]
         var cartedItems = [YMMECommerceCartItem]()
         
@@ -214,10 +211,10 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
                 originalPrice: originalPrice,
                 promoCodes: nil)
             
-            let addedItems = YMMECommerceCartItem(product: product, quantity: .init(string: "1"), revenue: actualPrice, referrer: nil)
+            let addedItems = YMMECommerceCartItem(product: product, quantity: .init(string: (item[4] as! String)), revenue: actualPrice, referrer: nil)
             cartedItems.append(addedItems)
         }
-        let order = YMMECommerceOrder(identifier: orderID, cartItems: cartedItems, payload: nil)
+        let order = YMMECommerceOrder(identifier: "", cartItems: cartedItems, payload: nil)
         YMMYandexMetrica.report(eCommerce: .purchaseEvent(order: order), onFailure: nil)
 
         result(nil)
