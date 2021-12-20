@@ -33,6 +33,17 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
         YMMYandexMetrica.activate(with: configuration!)
 
         result(nil)
+    
+    case "reportRevenue":
+        let args = call.arguments as! [String: Any]
+        let priceQuantity = args["productQuantity"] as! UInt
+        
+        let revenueInfo = YMMMutableRevenueInfo.init(priceDecimal: args["productPrice"] as! NSDecimalNumber, currency: "RUB")
+        revenueInfo.productID = args["productID"] as! String
+        revenueInfo.quantity = priceQuantity
+        
+        YMMYandexMetrica.reportRevenue(revenueInfo, onFailure: nil)
+        result(nil)
     case "reportEvent":
         let args = call.arguments as! [String: Any]
         let attributes = args["attributes"] as? [String : Any]

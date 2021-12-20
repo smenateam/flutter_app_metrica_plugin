@@ -4,7 +4,8 @@ part of app_metrica_plugin;
 class AppmetricaSdk {
   String? globalApiKey;
 
-  static final MethodChannel _channel = const MethodChannel('app_metrica_plugin');
+  static final MethodChannel _channel =
+      const MethodChannel('app_metrica_plugin');
 
   /// Initializes the library in an application with given parameters.
   ///
@@ -17,12 +18,12 @@ class AppmetricaSdk {
   /// Android only. The [maxReportsInDatabaseCount] is maximum number of events that can be stored in the database on the phone before being sent to AppMetrica. If there are more events, old records will begin to be deleted. The default value is 1000 (allowed values from 100 to 10000).
   Future<void> activate(
       {required String apiKey,
-        int sessionTimeout = 10,
-        bool locationTracking = true,
-        bool statisticsSending = true,
-        bool crashReporting = true,
-        bool revenueAutoTrackingEnabled = true,
-        int maxReportsInDatabaseCount = 1000}) async {
+      int sessionTimeout = 10,
+      bool locationTracking = true,
+      bool statisticsSending = true,
+      bool crashReporting = true,
+      bool revenueAutoTrackingEnabled = true,
+      int maxReportsInDatabaseCount = 1000}) async {
     /// Set the API Key after activation.
     globalApiKey = apiKey;
 
@@ -35,6 +36,21 @@ class AppmetricaSdk {
       'maxReportsInDatabaseCount': maxReportsInDatabaseCount,
       'revenueAutoTrackingEnabled': revenueAutoTrackingEnabled,
     });
+  }
+
+  Future<void> reportRevenue({
+    required String productID,
+    required int productQuantity,
+    required var productPrice,
+  }) async {
+    await _channel.invokeMethod<void>(
+      'reportRevenue',
+      <String, dynamic>{
+        'productID': productID,
+        'productQuantity': productQuantity,
+        'productPrice': productPrice,
+      },
+    );
   }
 
   ///Sends the begining of checkout event with [orderID] and List of lists of products as a set of [products]
@@ -76,15 +92,12 @@ class AppmetricaSdk {
     required String productName,
     required String productID,
   }) async {
-    await _channel.invokeMethod<void>(
-        'addCartItemEvent',
-        <String, dynamic>{
-          'actualPrice': actualPrice,
-          'productOriginalPrice' : productOriginalPrice,
-          'productName': productName,
-          'productID':productID,
-        }
-    );
+    await _channel.invokeMethod<void>('addCartItemEvent', <String, dynamic>{
+      'actualPrice': actualPrice,
+      'productOriginalPrice': productOriginalPrice,
+      'productName': productName,
+      'productID': productID,
+    });
   }
 
   ///Sends an event for deleting an item from the shopping cart to the AppMetrica server.
@@ -94,15 +107,12 @@ class AppmetricaSdk {
     required String productName,
     required String productID,
   }) async {
-    await _channel.invokeMethod<void>(
-        'removeCartItemEvent',
-        <String, dynamic>{
-          'actualPrice': actualPrice,
-          'productOriginalPrice' : productOriginalPrice,
-          'productName': productName,
-          'productID':productID,
-        }
-    );
+    await _channel.invokeMethod<void>('removeCartItemEvent', <String, dynamic>{
+      'actualPrice': actualPrice,
+      'productOriginalPrice': productOriginalPrice,
+      'productName': productName,
+      'productID': productID,
+    });
   }
 
   ///Sends an event recording the viewing of a specific product card to the AppMetrica server.
@@ -250,10 +260,10 @@ class AppmetricaSdk {
     return;
   }
 
-  // Sets referral URL for this installation. This might be required to track
-  // some specific traffic sources like Facebook.
-  // Referral URL reporting is no longer available
-  // but many agencies use this report
+// Sets referral URL for this installation. This might be required to track
+// some specific traffic sources like Facebook.
+// Referral URL reporting is no longer available
+// but many agencies use this report
   Future<void> reportReferralUrl({required String referral}) async {
     await _channel.invokeMethod<String>('reportReferralUrl', <String, dynamic>{
       'referral': referral,

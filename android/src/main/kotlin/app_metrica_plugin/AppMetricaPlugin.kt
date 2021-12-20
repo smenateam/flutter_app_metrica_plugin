@@ -6,8 +6,7 @@ import android.util.Log
 import android.app.Application
 import android.content.Context
 import androidx.annotation.NonNull
-import java.util.ArrayList
-import java.util.Map
+import com.yandex.metrica.Revenue
 import java.util.function.Consumer
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.BinaryMessenger
@@ -21,6 +20,8 @@ import com.yandex.metrica.YandexMetricaConfig
 import com.yandex.metrica.ecommerce.*
 import com.yandex.metrica.profile.Attribute
 import com.yandex.metrica.profile.UserProfile
+import java.util.*
+import java.util.Map
 
 /**
  * AppmetricaSdkPlugin
@@ -78,8 +79,24 @@ class AppMetricaPlugin : MethodCallHandler, FlutterPlugin {
       "removeCartItemEvent" -> handleRemoveCartItemEvent(call, result)
       "beginCheckoutEvent" -> handleBeginCheckoutEvent(call, result)
       "purchaseEvent" -> handlePurchaseEvent(call, result)
+      "reportRevenue" -> reportRevenue(call, result)
       else -> result.notImplemented()
     }
+  }
+
+  private fun reportRevenue(call: MethodCall, result: Result) {
+    try {
+      val arguments = call.arguments as Map<String, Any>
+      val productID = arguments["productID"] as String?
+      val productQuantity = arguments["productQuantity"] as Int?
+      val productPrice = arguments["productPrice"] as Long
+
+      YandexMetrica.reportRevenue(Revenue.newBuilderWithMicros(productPrice, Currency.getInstance("RUB")).withProductID(productID).withQuantity(productQuantity).build())
+    } catch (e: Exception) {
+      Log.e(TAG, e.message, e)
+      result.error("Error sending reportRevenue", e.message, null)
+    }
+    result.success(null)
   }
 
   private fun handlePurchaseEvent(call: MethodCall, result: Result) {
