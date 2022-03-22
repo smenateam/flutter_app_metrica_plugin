@@ -184,8 +184,11 @@ public class SwiftAppMetricaPlugin: NSObject, FlutterPlugin {
                 actualPrice: actualPrice,
                 originalPrice: originalPrice,
                 promoCodes: nil)
+                          
+                let doubleQuantity: Double = item[4] as! Double
+                let stringQuantity: String = String(format: "%f",doubleQuantity as CVarArg)
             
-            let addedItems = YMMECommerceCartItem(product: product, quantity: .init(string: (item[4] as! String)), revenue: actualPrice, referrer: nil)
+            let addedItems = YMMECommerceCartItem(product: product, quantity: .init(string: (stringQuantity)), revenue: actualPrice, referrer: nil)
             cartedItems.append(addedItems)
         }
         
